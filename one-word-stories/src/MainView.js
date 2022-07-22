@@ -8,6 +8,9 @@ function MainView() {
      let stories = await invoke('fetch_stories');
     return stories;
   }
+  const post_stories = async (story) => {
+    await invoke('post_stories', story);
+  }
   const [stories, setStories] = useState([]);
  useEffect(() => { 
   fetch_stories().then(stories => setStories(stories));
@@ -18,7 +21,7 @@ function MainView() {
     <div className="MainView">
       <div className='MainView-container'>
         <button className='add-story-button button' onClick={() => {
-          fetch_stories()
+          
         }}>+</button>
         <div className='content-grid-container'>
           {stories.map((story) => {

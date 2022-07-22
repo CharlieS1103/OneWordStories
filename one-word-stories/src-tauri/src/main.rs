@@ -23,8 +23,14 @@ async fn fetch_stories() -> Result<Vec<Story>, Error> {
     Ok(cards)
 }
 #[tauri::command]
-async fn create_story(){
-  println!("Placeholder for create_story");
+async fn create_story(story : Story) -> Result<Story, Error> {
+  let client = reqwest::Client::new();
+  let resp = client.post("http://localhost:2567/cards")
+    .json(&story)
+    .send().await?;
+  let body = resp.text().await?;
+  println!("{}", body);
+  Ok(story);
 }
 
 #[derive(Debug, thiserror::Error)]
